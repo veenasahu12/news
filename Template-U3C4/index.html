@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+   
+  </head>
+
+  <style>
+    #container{
+    display: flex;
+    border: 5px solid black;
+  }
+  #sidebar{
+    flex: 2;
+    border: 6px solid black;
+    height: 600px;
+  }
+  #main{
+    flex:8;
+
+  }
+  .card{
+    display: flex;
+    border: 2px solid black;
+    height: 300px;
+    width:90%;
+    margin: 3%;
+  }
+  .img{
+    width: 400px;
+    height:300px;
+    border: 2px solid black;
+  }
+  .title{
+    border: 2px solid black;
+    font-weight: bold;
+    width:300px
+  }
+  .desc{
+    border: 2px solid black;
+    font-weight: bold;
+    width:300px
+  }
+  </style>
+
+  <body>
+    <div id="container">
+      <div id="sidebar">
+        <!--DO NOT CHANGE THIS ID's-->
+        <!--Append the horizontal navbar(sidebar) here only-->
+        
+      </div>
+
+      <div id="main">
+        <!--DO NOT CHANGE THIS ID's-->
+        <!--Append top headlines from india here only-->
+      </div>
+    </div>
+  </body>
+</html>
+<script type="module">
+
+  import sidebar from "./components/sidebar.js";
+  
+  import {apiCall,appendArticles} from "./scripts/main.js";
+  // console.log("sidebar:",sidebar);
+  
+
+  let sidebar_div = document.getElementById("sidebar");
+  sidebar_div.innerHTML = sidebar();
+
+  let res = await apiCall("https://shrouded-earth-23381.herokuapp.com/api/headlines/india");
+  console.log("res:",res);
+
+  let parent = document.getElementById("main");
+  appendArticles(res,parent);
+
+  let input = document.getElementById("searchbar");
+  input.addEventListener("keypress",(e)=>{
+    console.log("e:",e);
+    if(e.key === "Enter"){
+
+      let input_value = document.getElementById("searchbar").value
+
+      localStorage.setItem("search_term",input_value);
+
+      window.location.href="search.html"
+    }
+  });
+
+</script>
